@@ -33,4 +33,7 @@ public class BookServiceImpl {
         return bookToUpdate;
     }
 
+    public void addBook(Book book){
+        repository.save(book);
+    }
 }
