@@ -1,7 +1,4 @@
 package com.booktracker.book;
-
-import com.booktracker.book.Book;
-import com.booktracker.book.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +32,13 @@ public class BookServiceImpl {
 
     public void addBook(Book book){
         repository.save(book);
+    }
+
+    public List<Book> findAllReadBooks(){
+        return repository.findAllReadBooks();
+    }
+
+    public List<Book> findAllUnreadBooks(){
+        return repository.findAllUnreadBooks();
     }
 }

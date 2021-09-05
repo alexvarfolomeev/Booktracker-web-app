@@ -5,12 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -35,5 +32,15 @@ public class BookController {
         Book book = objectMapper.readValue(payload, Book.class);
         bookService.addBook(book);
         return ResponseEntity.status(201).body(book);
+    }
+
+    @GetMapping("/show-all-read-books")
+    public List<Book> showAllReadBooks(){
+        return bookService.findAllReadBooks();
+    }
+
+    @GetMapping("/show-all-unread-books")
+    public List<Book> showAllUnreadBooks(){
+        return bookService.findAllUnreadBooks();
     }
 }
