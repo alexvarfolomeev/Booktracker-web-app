@@ -43,4 +43,18 @@ public class BookController {
     public List<Book> showAllUnreadBooks(){
         return bookService.findAllUnreadBooks();
     }
+
+    @DeleteMapping("/delete-book/{id}")
+    public ResponseEntity<Book> deleteBook(@PathVariable Long id){
+        bookService.deleteBook(id);
+        return ResponseEntity.status(201).build();
+    }
+
+    @PostMapping(value = "/update-book/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Book> updateBook(@RequestBody String jsonRequest, @PathVariable Long id) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Book book = objectMapper.readValue(jsonRequest, Book.class);
+        bookService.updateBookInfo(id, book);
+        return ResponseEntity.status(201).body(book);
+    }
 }
