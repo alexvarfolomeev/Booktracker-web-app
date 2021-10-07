@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Card, Table, Image, ButtonGroup, Button, Modal } from 'react-bootstrap'
+import {Card, Table, Image, ButtonGroup, Button, Modal, Nav} from 'react-bootstrap'
+import ApiService from "./ApiService";
 import Ripples from 'react-ripples'
+import {faList} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Link} from "react-router-dom";
 
 
 export default class Books extends Component {
@@ -11,6 +15,19 @@ export default class Books extends Component {
         this.state = {
             books: []
         }
+        this.reloadBookList = this.reloadBookList.bind(this);
+    }
+
+    editBook(id) {
+        window.localStorage.setItem("bookId", id);
+        this.props.history.push('/update-book');
+    }
+
+    reloadBookList() {
+        ApiService.fetchBooks()
+            .then((res) => {
+                this.setState({users: res.data.result})
+            });
     }
 
     componentDidMount() {
@@ -36,7 +53,7 @@ export default class Books extends Component {
     render() {
             return (
                 <Card className={"bordered border-dark bg-dark text-white"} style={{ marginTop: 50, marginBottom: 50, marginLeft: 50, marginRight: 50 }}>
-                    <Card.Header>
+                    <Card.Header><FontAwesomeIcon icon={faList} style={{marginRight: 10}}/>
                         Список всех книг
                     </Card.Header>
                     <Card.Body>
@@ -62,12 +79,12 @@ export default class Books extends Component {
                                                 <td>{book.bookStatus}</td>
                                                 <td>
                                                     <Ripples>
-                                                        <Button variant="outline-danger" onClick={this.deleteBook.bind(this, book.id)}>Удалить</Button>
+                                                        <Button size="sm" variant="outline-danger" onClick={this.deleteBook.bind(this, book.id)}>Удалить</Button>
                                                     </Ripples>
                                                 </td>
                                                 <td>
                                                     <Ripples>
-                                                        <Button variant="outline-success" href='/update-book'>Редактировать</Button>{' '}
+                                                        <Link to={"update-book/" + book.id} className="btn btn-sm btn-outline-primary">Редактировать</Link>
                                                     </Ripples>
                                                 </td>
                                             </tr>

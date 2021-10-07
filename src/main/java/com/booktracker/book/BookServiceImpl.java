@@ -15,8 +15,8 @@ public class BookServiceImpl {
         return repository.findAll();
     }
 
-    public Optional findBookById(Long id){
-        return repository.findById(id);
+    public Book findBookById(Long id){
+        return repository.findById(id).get();
     }
 
     public void deleteBook(Long id){
@@ -24,9 +24,12 @@ public class BookServiceImpl {
     }
 
     public Book updateBookInfo(Long id, Book book){
-        Book bookToUpdate = (Book) repository.findById(id).get();
+        Book bookToUpdate = repository.findById(id).get();
         bookToUpdate.setBookName(book.getBookName());
         bookToUpdate.setAuthorName(book.getAuthorName());
+        bookToUpdate.setCoverPicURL(book.getCoverPicURL());
+        bookToUpdate.setBookStatus(book.getBookStatus());
+        repository.save(book);
         return bookToUpdate;
     }
 

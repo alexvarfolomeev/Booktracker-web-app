@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -50,7 +51,13 @@ public class BookController {
         return ResponseEntity.status(201).build();
     }
 
-    @PostMapping(value = "/update-book/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/find-book-by-id/{id}")
+    public ResponseEntity<Book> findBookById(@PathVariable Long id) {
+        Book book = bookService.findBookById(id);
+        return ResponseEntity.status(200).body(book);
+    }
+
+    @PutMapping(value = "/update-book/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Book> updateBook(@RequestBody String jsonRequest, @PathVariable Long id) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         Book book = objectMapper.readValue(jsonRequest, Book.class);

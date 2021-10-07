@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Card, Form, Button, Col, Select } from 'react-bootstrap'
+import {faSave} from '@fortawesome/free-solid-svg-icons'
+import {faUndo} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export default class AddBook extends Component {
 
@@ -38,7 +41,10 @@ export default class AddBook extends Component {
         this.setState({
             [event.target.name]: event.target.value
         })
+    }
 
+    resetBook = () => {
+        this.setState(() => this.initialState);
     }
 
     render() {
@@ -52,7 +58,7 @@ export default class AddBook extends Component {
         return (
             <Card className={"bordered border-dark bg-dark text-white"} style={{ marginTop: 50, marginBottom: 50, marginLeft: 50, marginRight: 50 }}>
                 <Card.Header>Добавить книгу</Card.Header>
-                <Form onSubmit={this.submitBook} id="bookFormId">
+                <Form onReset={this.resetBook} onSubmit={this.submitBook} id="bookFormId">
                     <Card.Body>
                         <Form.Group as={Col} controlId="formGridAuthor">
                             <Form.Label>Автор</Form.Label>
@@ -97,7 +103,10 @@ export default class AddBook extends Component {
                     </Card.Body>
                     <Card.Footer>
                         <Button variant="success" type="submit">
-                            Сохранить
+                            <FontAwesomeIcon icon={faSave} style={{marginRight: 10}}/>Сохранить
+                        </Button> {' '}
+                        <Button variant="success" type="reset">
+                            <FontAwesomeIcon icon={faUndo} style={{marginRight: 10}}/>Сбросить
                         </Button>
                     </Card.Footer>
                 </Form>
