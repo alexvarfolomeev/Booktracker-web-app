@@ -7,7 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -64,4 +63,10 @@ public class BookController {
         bookService.updateBookInfo(id, book);
         return ResponseEntity.status(201).body(book);
     }
+
+    // TODO: 07.10.2021
+    //  1. Добавить Pagination
+    //  2. Сделать кнопку для обновления статуса книги
+    //  3. Авторизация, аутентификация и регистрация
+    //  4. Статистика прочитанных книг по годам (ProgressBar на главной стринице)
 }
