@@ -1,5 +1,7 @@
 package com.booktracker.book;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +13,8 @@ public class BookServiceImpl {
     @Autowired
     private BooksRepository repository;
 
-    public List<Book> findAllBooks(){
-        return repository.findAll();
+    public Page<Book> findAllBooks(Pageable pageable){
+        return repository.findAll(pageable);
     }
 
     public Book findBookById(Long id){

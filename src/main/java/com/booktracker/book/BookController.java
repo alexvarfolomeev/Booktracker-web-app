@@ -3,6 +3,8 @@ package com.booktracker.book;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +24,8 @@ public class BookController {
     }
 
     @GetMapping("/show-all")
-    public List<Book> showAllBooks(){
-        return bookService.findAllBooks();
+    public Page<Book> showAllBooks(Pageable pageable){
+        return bookService.findAllBooks(pageable);
     }
 
     @PostMapping(value = "/add-book", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
